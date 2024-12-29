@@ -2,7 +2,7 @@
 
 **後端 : SpirngBoot、Spring Data JPA**
 
-**前端 : 使用CDN 掛載Vue.js 搭配 Vuetify**
+**前端 : 使用 CDN 掛載 Vue.js 搭配 Vuetify**
 
 **資料庫 : h2**
 
