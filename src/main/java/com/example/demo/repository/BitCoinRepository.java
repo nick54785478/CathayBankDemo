@@ -9,4 +9,5 @@ import com.example.demo.entity.Bitcoin;
 public interface BitCoinRepository extends JpaRepository<Bitcoin, String> {
 
 	Bitcoin findByCode(String code);
+	
 }
