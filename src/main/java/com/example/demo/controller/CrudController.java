@@ -47,6 +47,7 @@ public class CrudController {
 	 */
 	@PostMapping("/addAll")
 	public ResponseEntity<BaseResponse> addAll(@RequestBody List<CreateCoinRequest> requestData) {
+		System.out.println("requestData:" + requestData);
 		bcService.addAllData(requestData);
 		return new ResponseEntity<>(new BaseResponse("201", "成功新增多筆資料!"), HttpStatus.CREATED);
 	}

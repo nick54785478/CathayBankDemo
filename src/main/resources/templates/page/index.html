@@ -163,7 +163,7 @@
 				<v-row>
 					<v-col><h2>呼叫coindesk Api:</h2></v-col>			
 					<v-col>
-						<v-btn color="primary" @click="getRequest();addPost()">click</v-btn>
+						<v-btn color="primary" @click="fetchAndAdd()">click</v-btn>
 					</v-col>
 				</v-row>
 				<v-row>
@@ -289,28 +289,43 @@
 		
 		methods:{
 			// get coindeskAPI  json資料
-			getRequest(){
-				var that = this;
-				coindeskApi = "https://api.coindesk.com/v1/bpi/currentprice.json";
-				axios.get(coindeskApi)
-				.then(function(response){
-					console.log(response.data.bpi);
-					that.bpi = response.data.bpi;
-				})
-			},
-			
+			async getRequest() {
+			    try {
+			      const coindeskApi = "https://api.coindesk.com/v1/bpi/currentprice.json";
+			      const response = await axios.get(coindeskApi);
+			      console.log(response.data.bpi);
+			      this.bpi = response.data.bpi;
+			    } catch (error) {
+			      console.error("Error fetching data:", error);
+			    }
+			  },
 			
 			// 新增多筆
-			addPost(){
-				axios.post("/CathayBankDemo/addAll", this.bpi)
-				.then(function(response){
-					console.log(response);
-// 					window.alert("新增成功!!!");
-				})
-				.catch(function (error) {
-				 	console.log(error);
-			  	});
-			},
+			 async addPost() {
+			    try {
+			      console.log(this.bpi.USD, this.bpi.GBP, this.bpi.EUR);
+			
+			      // 構造請求數據
+			      const request = [
+			        this.bpi.USD,
+			        this.bpi.GBP,
+			        this.bpi.EUR,
+			      ];
+			
+			      console.log(request);
+			
+			      const response = await axios.post("/CathayBankDemo/addAll", request);
+			      console.log(response);
+			    } catch (error) {
+			      console.error("Error adding data:", error);
+			    }
+			  },
+			  
+			   // 整合兩個方法
+			  async fetchAndAdd() {
+			    await this.getRequest(); // 確保資料已取得
+			    await this.addPost();    // 然後執行新增
+			  },
 			
 			// 查詢全部
 			getAll(){
@@ -319,7 +334,7 @@
 				.then(function(response){
 					console.log("response = "+response.data);
 					console.log(response.data);
-					that.getBpi = response.data;
+					that.getBpi = response.data.data;
 				})
 			},
 			
@@ -337,7 +352,7 @@
 					
 					console.log("response = "+JSON.stringify(response.data));
 					console.log(response.data);
-					that.getParams = response.data;
+					that.getParams = response.data.data;
 				})
 			},
 			
