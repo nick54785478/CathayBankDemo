@@ -344,14 +344,11 @@
 				console.log("this.code="+this.code);
 				axios.get("/CathayBankDemo/getByCode/"+this.code)
 				.then(function(response){
-					if (response.data.length==0){
+					if (response.data.data==null){
 						alert("查無資料");
 // 						window.location.reload();
 						
 					}
-					
-					console.log("response = "+JSON.stringify(response.data));
-					console.log(response.data);
 					that.getParams = response.data.data;
 				})
 			},
@@ -392,8 +389,6 @@
 					that.delDialog = false;
 					alert("刪除成功");
 		 			window.location.reload();
-
-
 				}).catch(function (error) {
 				 	console.log(error);
 			  	});

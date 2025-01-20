@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,6 +81,9 @@ public class BitCoinServiceImpl implements BitCoinService {
 	@Override
 	public BitcoinQueriedResponseData getByCode(String code) {
 		Bitcoin coin = bcRepository.findByCode(code);
+		if (Objects.isNull(coin)) {
+			return null;
+		}
 		return BaseDataTransformer.transformData(coin, BitcoinQueriedResponseData.class);
 	}
 
