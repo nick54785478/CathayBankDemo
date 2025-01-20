@@ -20,4 +20,6 @@ public class BitcoinQueriedResponseData {
 	private String description;
 
 	private Double rateFloat;
+	
+	private String updateTime;
 }

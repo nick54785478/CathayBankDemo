@@ -51,6 +51,7 @@ public class Bitcoin {
 	@Column(name = "rate_float")
 	private Double rateFloat;
 
+	// 會在資料變更時即時更新時間
 	@LastModifiedDate
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss", shape = JsonFormat.Shape.STRING, timezone = "GMT+8")
