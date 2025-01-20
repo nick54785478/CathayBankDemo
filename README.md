@@ -1,4 +1,8 @@
-**使用工具: STS4** 
+<h3>國泰世華 JAVA engineer 線上作業</h3> 
+
+作者: 張耿豪 Nick Zhang
+
+**架構 : MVC 架構**
 
 **後端 : SpirngBoot、Spring Data JPA**
 
@@ -7,6 +11,13 @@
 **資料庫 : h2**
 
 **功能介紹:** 
+1. 呼叫 Test 進行測試
+* BitcoinFeignClientTest : 透過 Feign Client 取回 Bitcoin 資料
+* BitCoinServiceImplTest : 對 Service 進行測試 (依需求打開 @Test 註解)
+* CathayBankDemoApplicationTests : 透過 Feign Client 對後端進行集成測試 (註.需先啟動後端專案)
+
+2. 前端頁面(供參): 是我在 2022 年離開聯邦時蝦寫的，應該蠻多 Bug (目前 Vue3 已經忘得差不多了，修改會花太多時間，後續有想要改再改吧)。
+Vue3
   * 新增: (點擊後)會出現新增資料功能的 Dialog，輸入並送出。
   * 呼叫coindesk Api: (點擊後)會將資料渲染到頁面上。
   * 依幣別查詢&修改&刪除:
