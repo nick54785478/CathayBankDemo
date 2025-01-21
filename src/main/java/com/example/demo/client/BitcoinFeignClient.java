@@ -4,7 +4,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.demo.config.BitcoinFeignConfiguration;
-import com.example.demo.dto.response.CurrentPrceResponse;
+import com.example.demo.dto.response.CurrentPriceResponse;
 
 @FeignClient(value = "BitcoinFeignClient", url = "https://api.coindesk.com/v1/bpi/currentprice.json", configuration = BitcoinFeignConfiguration.class)
 public interface BitcoinFeignClient {
@@ -15,6 +15,6 @@ public interface BitcoinFeignClient {
 	 * @return CurrentPrceResponse
 	 */
 	@GetMapping("")
-	public CurrentPrceResponse getCurrentPrice();
+	public CurrentPriceResponse getCurrentPrice();
 
 }

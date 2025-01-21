@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.demo.dto.request.CreateCoinRequest;
-import com.example.demo.dto.response.CurrentPrceResponse;
-import com.example.demo.dto.response.CurrentPrceResponse.BpiResource;
+import com.example.demo.dto.response.CurrentPriceResponse;
+import com.example.demo.dto.response.CurrentPriceResponse.BpiResource;
 import com.example.demo.util.BaseDataTransformer;
 
 @SpringBootTest
@@ -19,7 +19,7 @@ class BitcoinFeignClientTest {
 
 	@Test
 	void testGetCurrentPrice() {
-		CurrentPrceResponse currentPrice = client.getCurrentPrice();
+		CurrentPriceResponse currentPrice = client.getCurrentPrice();
 		System.out.println("currentPrice:" + currentPrice);
 		BpiResource bpi = currentPrice.getBpi();
 		// 美金轉換

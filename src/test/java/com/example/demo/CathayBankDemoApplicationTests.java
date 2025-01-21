@@ -19,7 +19,7 @@ import com.example.demo.dto.request.UpdateCoinRequest;
 import com.example.demo.dto.response.BaseResponse;
 import com.example.demo.dto.response.BitcoinListQueriedResponse;
 import com.example.demo.dto.response.BitcoinQueriedResponse;
-import com.example.demo.dto.response.CurrentPrceResponse.BitcoinResource;
+import com.example.demo.dto.response.CurrentPriceResponse.BitcoinResource;
 import com.example.demo.service.outbound.CoinDeskSerivce;
 import com.example.demo.util.BaseDataTransformer;
 
@@ -53,7 +53,7 @@ class CathayBankDemoApplicationTests {
 //	@Test
 	void testAddAllData() {
 		// 呼叫外部 API 取得 Code Disk 幣別價格資料
-		List<BitcoinResource> currentPriceList = coinDeskSerivce.getCurrentPriceList();
+		List<BitcoinResource> currentPriceList = coinDeskSerivce.getTransformedDataCurrentPriceList();
 		log.info("呼叫外部 API 取得 Code Disk 幣別價格資料:{}", currentPriceList);
 		// 幣別資料轉換
 		List<CreateCoinRequest> request = BaseDataTransformer.transformData(currentPriceList, CreateCoinRequest.class);

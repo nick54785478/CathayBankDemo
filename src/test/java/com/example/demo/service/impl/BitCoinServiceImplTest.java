@@ -13,8 +13,8 @@ import com.example.demo.client.BitcoinFeignClient;
 import com.example.demo.dto.BitcoinQueriedResponseData;
 import com.example.demo.dto.request.CreateCoinRequest;
 import com.example.demo.dto.request.UpdateCoinRequest;
-import com.example.demo.dto.response.CurrentPrceResponse;
-import com.example.demo.dto.response.CurrentPrceResponse.BpiResource;
+import com.example.demo.dto.response.CurrentPriceResponse;
+import com.example.demo.dto.response.CurrentPriceResponse.BpiResource;
 import com.example.demo.util.BaseDataTransformer;
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,7 @@ class BitCoinServiceImplTest {
 	 * */
 	@Test
 	public void testAddAllData() {
-		CurrentPrceResponse resource = client.getCurrentPrice();
+		CurrentPriceResponse resource = client.getCurrentPrice();
 
 		// DTO 轉換 Request Data
 		BpiResource bpi = resource.getBpi();
