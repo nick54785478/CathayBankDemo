@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.example.demo.exception.response.BaseExceptionResponse;
 import com.example.demo.util.BaseDataTransformer;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * 全域例外處理器
  */

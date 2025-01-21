@@ -107,7 +107,7 @@ public class Bitcoin {
 		this.rate = requestData.getRate();
 		this.description = requestData.getDescription();
 		this.rateFloat = Double.valueOf(requestData.getRate().replaceAll(",", ""));
-
+		this.updateTime = new Date();
 	}
 
 }

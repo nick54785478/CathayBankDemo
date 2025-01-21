@@ -1,402 +1,396 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
 
-<title>首頁</title>
-<link rel='stylesheet'
-	th:href="@{https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css}" />
-<link rel='stylesheet'
-	th:href="@{https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css}" />
-<script th:inline="javascript"
-	th:src="@{https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.min.js}"
-	charset="utf-8"></script>
-<script th:inline="javascript"
-	th:src="@{https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.js}"
-	charset="utf-8"></script>
-<script th:inline="javascript"
-	th:src="@{https://cdnjs.cloudflare.com/ajax/libs/vue-router/2.0.0/vue-router.min.js}"
-	charset="utf-8"></script>
-<script th:inline="javascript"
-	th:src="@{https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js}"
-	charset="utf-8"></script>
-<script th:inline="javascript"
-	th:src="@{https://cdn.jsdelivr.net/npm/sweetalert2@11}" charset="utf-8"></script>
+<head>
+	<meta charset="UTF-8">
+
+	<title>首頁</title>
+	<link rel='stylesheet' th:href="@{https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css}" />
+	<link rel='stylesheet' th:href="@{https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css}" />
+	<script th:inline="javascript" th:src="@{https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.min.js}"
+		charset="utf-8"></script>
+	<script th:inline="javascript" th:src="@{https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.js}"
+		charset="utf-8"></script>
+	<script th:inline="javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/vue-router/2.0.0/vue-router.min.js}"
+		charset="utf-8"></script>
+	<script th:inline="javascript" th:src="@{https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js}"
+		charset="utf-8"></script>
+	<script th:inline="javascript" th:src="@{https://cdn.jsdelivr.net/npm/sweetalert2@11}" charset="utf-8"></script>
 </head>
+
 <body>
 	<div id="app">
 		<v-app id="inspire">
 			<v-container>
-				<v-row>	
+				<v-row>
 					<h1>JAVA engineer線上作業</h1>
 				</v-row>
 			</v-container>
-			<v-container> 
-			
-				<!-- Dialog  新增用 -->
-					<v-dialog v-model="addDialog" width="500">
-						<v-card if="addDialog">
-							<v-card-title  class="text-h5 blue darken-3">
-								<div style="color: white;">新增</div>
-							</v-card-title>
-							<v-card-text>
-				                <v-container>
-									    <br />
-									    <v-row> 
-									    		<v-select :items="items" label="Code" 
-									    			v-model="params.code"></v-select>
-										</v-row>
-				                	
-				                		<br />
-								        
-								        <v-row>
-								        	<v-text-field name="rate" v-model="params.rate" label="Rate" placeholder="Rate" />
-								        </v-row>
-								        
-								        <v-row>
-								        	<v-text-field name="rateFloat" v-model="params.rateFloat" label="RateFloat"
-								        		 placeholder="RateFloat" />
-								        </v-row>
-								        
-								        <br />          
+			<v-container>
 
-							        <v-row>
-							        	<v-textarea name="Desciprion" solo placeholder="Decription" label="Decription"
-							        		auto-grow v-model="params.description" />
-							        </v-row>          
-									
-								</v-container>
-							</v-card-text>
-							<v-card-actions>
-								<v-btn color="primary" @click="addRequest(); addDialog=false" >送出</v-btn> 
-								<v-btn @click="addDialog=false">關閉</v-btn>			
-							</v-card-actions>
-						</v-card>
-					</v-dialog>	
-					<!-- Dialog  修改用 -->
-				<v-dialog v-model="updDialog" width="500">
-					<v-card if="updDialog">
-						<v-card-title  class="text-h5 blue darken-3">
-							<div style="color: white;">修改內容</div>
+				<!-- Dialog  新增用 -->
+				<v-dialog v-model="addDialog" width="500">
+					<v-card if="addDialog">
+						<v-card-title class="text-h5 blue darken-3">
+							<div style="color: white;">新增</div>
 						</v-card-title>
 						<v-card-text>
-			                <v-container>
-									    <br />
-									    <v-row> 
-									    		<v-select :items="items" label="Code" 
-									    			v-model="getParams.code" readonly></v-select>
-										</v-row>
-				                	
-				                		<br />
-								        
-								        <v-row>
-								        	<v-text-field name="rate" v-model="getParams.rate" label="Rate" placeholder="Rate" />
-								        </v-row>
-								        
-								        <v-row>
-								        	<v-text-field name="rateFloat" v-model="getParams.rateFloat" label="RateFloat"
-								        		 placeholder="RateFloat" />
-								        </v-row>
-								        
-								        <br />          
+							<v-container>
+								<br />
+								<v-row>
+									<v-select :items="items" label="Code" v-model="params.code"></v-select>
+								</v-row>
 
-							        <v-row>
-							        	<v-textarea name="Desciprion" solo placeholder="Decription" label="Decription"
-							        		auto-grow v-model="getParams.description" />
-							        </v-row>          
+								<br />
+
+								<v-row>
+									<v-text-field name="rate" v-model="params.rate" label="Rate" placeholder="Rate" />
+								</v-row>
+
+								<v-row>
+									<v-text-field name="rateFloat" v-model="params.rateFloat" label="RateFloat"
+										placeholder="RateFloat" />
+								</v-row>
+
+								<br />
+
+								<v-row>
+									<v-textarea name="Desciprion" solo placeholder="Decription" label="Decription"
+										auto-grow v-model="params.description" />
+								</v-row>
+
 							</v-container>
 						</v-card-text>
 						<v-card-actions>
-							<v-btn color="primary" @click="updRequest();" >送出</v-btn> 
-							<v-btn @click="updDialog=false">關閉</v-btn>			
+							<v-btn color="primary" @click="addRequest(); addDialog=false">送出</v-btn>
+							<v-btn @click="addDialog=false">關閉</v-btn>
+						</v-card-actions>
+					</v-card>
+				</v-dialog>
+				<!-- Dialog  修改用 -->
+				<v-dialog v-model="updDialog" width="500">
+					<v-card if="updDialog">
+						<v-card-title class="text-h5 blue darken-3">
+							<div style="color: white;">修改內容</div>
+						</v-card-title>
+						<v-card-text>
+							<v-container>
+								<br />
+								<v-row>
+									<v-select :items="items" label="Code" v-model="getParams.code" readonly></v-select>
+								</v-row>
+
+								<br />
+
+								<v-row>
+									<v-text-field name="rate" v-model="getParams.rate" label="Rate"
+										placeholder="Rate" />
+								</v-row>
+
+								<v-row>
+									<v-text-field name="rateFloat" v-model="getParams.rateFloat" label="RateFloat"
+										placeholder="RateFloat" />
+								</v-row>
+
+								<br />
+
+								<v-row>
+									<v-textarea name="Desciprion" solo placeholder="Decription" label="Decription"
+										auto-grow v-model="getParams.description" />
+								</v-row>
+							</v-container>
+						</v-card-text>
+						<v-card-actions>
+							<v-btn color="primary" @click="updRequest();">送出</v-btn>
+							<v-btn @click="updDialog=false">關閉</v-btn>
 						</v-card-actions>
 					</v-card>
 				</v-dialog>
 				<!-- Dialog  刪除用 -->
 				<v-dialog v-model="delDialog" width="500">
 					<v-card if="delDialog">
-						<v-card-title  class="text-h5 blue darken-3">
+						<v-card-title class="text-h5 blue darken-3">
 							<div style="color: white;">刪除</div>
 						</v-card-title>
 						<v-card-text>
-			                <v-container>
-			                			<br />
-			                			<v-row>
-			                				<h4>確定要刪除該筆資料?  你可能會無法復原</h4>
-			                			</v-row>
-									    <br />
-									    <v-row> 
-									    		<v-select :items="items" label="Code" 
-									    			v-model="getParams.code" readonly></v-select>
-										</v-row>
-				                	
-				                		<br />
-								        
-								        <v-row>
-								        	<v-text-field name="rate" v-model="getParams.rate" label="Rate" placeholder="Rate" readonly />
-								        </v-row>
-        
+							<v-container>
+								<br />
+								<v-row>
+									<h4>確定要刪除該筆資料? 你可能會無法復原</h4>
+								</v-row>
+								<br />
+								<v-row>
+									<v-select :items="items" label="Code" v-model="getParams.code" readonly></v-select>
+								</v-row>
 
-							        <v-row>
-							        	<v-textarea name="Desciprion" solo placeholder="Decription" label="Decription"
-							        		auto-grow v-model="getParams.description" readonly />
-							        </v-row>          
+								<br />
+
+								<v-row>
+									<v-text-field name="rate" v-model="getParams.rate" label="Rate" placeholder="Rate"
+										readonly />
+								</v-row>
+
+
+								<v-row>
+									<v-textarea name="Desciprion" solo placeholder="Decription" label="Decription"
+										auto-grow v-model="getParams.description" readonly />
+								</v-row>
 							</v-container>
 						</v-card-text>
 						<v-card-actions>
-							<v-btn color="primary" @click="delRequest(); delDialog=false">送出</v-btn> 
-							<v-btn @click="delDialog=false">關閉</v-btn>			
+							<v-btn color="primary" @click="delRequest(); delDialog=false">送出</v-btn>
+							<v-btn @click="delDialog=false">關閉</v-btn>
 						</v-card-actions>
 					</v-card>
-				</v-dialog>	
-		
-				
-					
+				</v-dialog>
+
+
+
 				<v-row>
-					<v-col ><a @click="addDialog=true" width="1500">新增</a></v-col>
+					<v-col><a @click="addDialog=true" width="1500">新增</a></v-col>
 				</v-row>
-				
-				
-				
-				
-				
+
+
+
+
+
 				<v-row>
-					<v-col><h2>呼叫coindesk Api:</h2></v-col>			
+					<v-col>
+						<h2>呼叫coindesk Api:</h2>
+					</v-col>
 					<v-col>
 						<v-btn color="primary" @click="fetchAndAdd()">click</v-btn>
 					</v-col>
 				</v-row>
 				<v-row>
 					<ul>
-						<li v-for="b in bpi" >
+						<li v-for="b in bpi">
 							{{b}}
 						</li>
 					</ul>
 				</v-row>
 			</v-container>
-			<v-container> 
-			<!-- 查詢 -->
-			<v-row>
-				<v-col>
-					<h2>查詢全部</h2>
-				</v-col>
-				<v-col>
-					<v-btn color="primary" @click="getAll()">click</v-btn>
-				</v-col>
-			</v-row>
-			
-			<v-row>
-				<ul>
-					<li v-for="bpi in getBpi" >
-						{{bpi.code}} :{ 
-							"幣別" : {{bpi.code}}({{bpi.codeZh}}), 
+			<v-container>
+				<!-- 查詢 -->
+				<v-row>
+					<v-col>
+						<h2>查詢全部</h2>
+					</v-col>
+					<v-col>
+						<v-btn color="primary" @click="getAll()">click</v-btn>
+					</v-col>
+				</v-row>
+
+				<v-row>
+					<ul>
+						<li v-for="bpi in getBpi">
+							{{bpi.code}} :{
+							"幣別" : {{bpi.code}}({{bpi.codeZh}}),
 							"符號" : {{bpi.symbol}},
 							"匯率" : {{bpi.rate}},
 							"敘述" : {{bpi.description}},
 							"更新時間" : {{bpi.updateTime}}
-						}
-					</li>
-				</ul>
-			</v-row>
+							}
+						</li>
+					</ul>
+				</v-row>
 			</v-container>
-		<br/>
-		<v-container> 
-			<v-row>
-				<h2>依幣別查詢&修改&刪除</h2>
-			</v-row>
-			<v-row>
-				<v-col cols="6" sm="4">
-					<v-select
-		                :items="items"
-		                label="Code"
-		                v-model="code"
-		             ></v-select>	
-	             </v-col>
-	             <v-col>
-	             	<v-btn color="primary" @click="getByCode()">查詢</v-btn>
-	             	<v-btn @click="getByCode(); updDialog=true; ">修改</v-btn>
-	             	<v-btn color="error" @click="delDialog=true; getByCode();">刪除</v-btn>
-	             </v-col>
-			</v-row>
-			<v-row>
-				{ 
-					"幣別": {{getParams.code}}({{getParams.codeZh}}), "符號": {{getParams.symbol}}, "匯率": {{getParams.rate}}, "敘述": {{getParams.description}}, 
+			<br />
+			<v-container>
+				<v-row>
+					<h2>依幣別查詢&修改&刪除</h2>
+				</v-row>
+				<v-row>
+					<v-col cols="6" sm="4">
+						<v-select :items="items" label="Code" v-model="code"></v-select>
+					</v-col>
+					<v-col>
+						<v-btn color="primary" @click="getByCode()">查詢</v-btn>
+						<v-btn @click="getByCode(); updDialog=true; ">修改</v-btn>
+						<v-btn color="error" @click="delDialog=true; getByCode();">刪除</v-btn>
+					</v-col>
+				</v-row>
+				<v-row>
+					{
+					"幣別": {{getParams.code}}({{getParams.codeZh}}), "符號": {{getParams.symbol}}, "匯率":
+					{{getParams.rate}}, "敘述": {{getParams.description}},
 					"更新時間": {{getParams.updateTime}}
-				}
-			</v-row>
-		</v-container>
-		<br>
-		<v-container>
-			<v-row>
-				<h3>(註.)</h3>
-			</v-row>
-			<v-row>
-				&emsp; 新增: 可新增JPY資料，這筆資料在初始化中並未插入h2。
-				
-			</v-row>
+					}
+				</v-row>
+			</v-container>
+			<br>
+			<v-container>
+				<v-row>
+					<h3>(註.)</h3>
+				</v-row>
+				<v-row>
+					&emsp; 新增: 可新增JPY資料，這筆資料在初始化中並未插入h2。
 
-		</v-container>
+				</v-row>
+
+			</v-container>
 		</v-app>
-	
+
 	</div>
-	
+
 </body>
 <script>
 	new Vue({
-		el:"#app",
+		el: "#app",
 		vuetify: new Vuetify,
-		data(){
+		data() {
 			return {
-				params:{
-					code:"USD",
-					codeZh:"美金",
-					symbol:"",
-					rate:"",
-					description:"",
-					rateFloat:"",
-					updateTime:"",
+				params: {
+					code: "USD",
+					codeZh: "美金",
+					symbol: "",
+					rate: "",
+					description: "",
+					rateFloat: "",
+					updateTime: "",
 				},
-				
-				 // Dialog(新增)  
-	    	    addDialog: false,
-	    	    updDialog: false,
-	    	    delDialog: false,
-				
-				getParams:{
-					code:"",
-					codeZh:"",
-					symbol:"",
-					rate:"",
-					description:"",
-					rateFloat:"",
-					updateTime:"",
+
+				// Dialog(新增)  
+				addDialog: false,
+				updDialog: false,
+				delDialog: false,
+
+				getParams: {
+					code: "",
+					codeZh: "",
+					symbol: "",
+					rate: "",
+					description: "",
+					rateFloat: "",
+					updateTime: "",
 				},
-				
-				
-				bpi:[],
-				
-				getBpi:[],
-				
-				items:["USD", "EUR", "GBP", "JPY"],
-				
-				code:"USD",
-				
-				
-				
+
+
+				bpi: [],
+
+				getBpi: [],
+
+				items: ["USD", "EUR", "GBP", "JPY"],
+
+				code: "USD",
+
+
+
 			}
 		},
-		
-		
-		methods:{
+
+
+		methods: {
 			// get coindeskAPI  json資料
 			async getRequest() {
-			    try {
-			      const coindeskApi = "https://api.coindesk.com/v1/bpi/currentprice.json";
-			      const response = await axios.get(coindeskApi);
-			      console.log(response.data.bpi);
-			      this.bpi = response.data.bpi;
-			    } catch (error) {
-			      console.error("Error fetching data:", error);
-			    }
-			  },
-			
+				try {
+					const coindeskApi = "https://api.coindesk.com/v1/bpi/currentprice.json";
+					const response = await axios.get(coindeskApi);
+					console.log(response.data.bpi);
+					this.bpi = response.data.bpi;
+				} catch (error) {
+					console.error("Error fetching data:", error);
+				}
+			},
+
 			// 新增多筆
-			 async addPost() {
-			    try {
-			      console.log(this.bpi.USD, this.bpi.GBP, this.bpi.EUR);
-			
-			      // 構造請求數據
-			      const request = [
-			        this.bpi.USD,
-			        this.bpi.GBP,
-			        this.bpi.EUR,
-			      ];
-			
-			      console.log(request);
-			
-			      const response = await axios.post("/CathayBankDemo/addAll", request);
-			      console.log(response);
-			    } catch (error) {
-			      console.error("Error adding data:", error);
-			    }
-			  },
-			  
-			   // 整合兩個方法
-			  async fetchAndAdd() {
-			    await this.getRequest(); // 確保資料已取得
-			    await this.addPost();    // 然後執行新增
-			  },
-			
+			async addPost() {
+				try {
+					console.log(this.bpi.USD, this.bpi.GBP, this.bpi.EUR);
+
+					// 構造請求數據
+					const request = [
+						this.bpi.USD,
+						this.bpi.GBP,
+						this.bpi.EUR,
+					];
+
+					console.log(request);
+
+					const response = await axios.post("/CathayBankDemo/addAll", request);
+					console.log(response);
+				} catch (error) {
+					console.error("Error adding data:", error);
+				}
+			},
+
+			// 整合兩個方法
+			async fetchAndAdd() {
+				await this.getRequest(); // 確保資料已取得
+				await this.addPost();    // 然後執行新增
+			},
+
 			// 查詢全部
-			getAll(){
+			getAll() {
 				var that = this;
 				axios.get("/CathayBankDemo/getAll")
-				.then(function(response){
-					console.log("response = "+response.data);
-					console.log(response.data);
-					that.getBpi = response.data.data;
-				})
+					.then(function (response) {
+						console.log("response = " + response.data);
+						console.log(response.data);
+						that.getBpi = response.data.data;
+					})
 			},
-			
-			// 依code查詢
-			getByCode(){
-				var that = this;
-				console.log("this.code="+this.code);
-				axios.get("/CathayBankDemo/getByCode/"+this.code)
-				.then(function(response){
-					if (response.data.data==null){
-						alert("查無資料");
-// 						window.location.reload();
-						
-					}
-					that.getParams = response.data.data;
-				})
-			},
-			
-			// 新增一筆資料
-			addRequest(){
-				axios.post("/CathayBankDemo/add",this.params)
-			 	.then(function(response){
-			 		console.log("新增成功");
-			 		alert("新增成功");
-		 			window.location.reload();
 
-			 	}).catch(function (error) {
-				 	console.log(error)
-			 		alert("主鍵重複!!!")
-			  	});
+			// 依code查詢
+			getByCode() {
+				var that = this;
+				console.log("this.code=" + this.code);
+				axios.get("/CathayBankDemo/getByCode/" + this.code)
+					.then(function (response) {
+						if (response.data.data == null) {
+							alert("查無資料");
+							// 						window.location.reload();
+
+						}
+						that.getParams = response.data.data;
+					})
 			},
-			
+
+			// 新增一筆資料
+			addRequest() {
+				axios.post("/CathayBankDemo/add", this.params)
+					.then(function (response) {
+						console.log("新增成功");
+						alert("新增成功");
+						window.location.reload();
+
+					}).catch(function (error) {
+						console.log(error)
+						alert("主鍵重複!!!")
+					});
+			},
+
 			// 修改一筆資料
-			updRequest(){
+			updRequest() {
 				var that = this;
-				axios.put("/CathayBankDemo/updByCode/"+this.code, this.getParams)
-				.then(function(response){
-					console.log("修改成功");
-					that.updDialog = false;
-					alert("修改成功");
-				}).catch(function (error) {
-				 	console.log(error);
-			  	});
+				axios.put("/CathayBankDemo/updByCode/" + this.code, this.getParams)
+					.then(function (response) {
+						console.log("修改成功");
+						that.updDialog = false;
+						alert("修改成功");
+						window.location.reload();
+
+					}).catch(function (error) {
+						console.log(error);
+					});
 			},
-			
+
 			// 刪除一筆資料
-			delRequest(){
+			delRequest() {
 				var that = this;
-				axios.delete("/CathayBankDemo/delByCode/"+this.code)
-				.then(function(response){
-					console.log("刪除成功");
-					that.delDialog = false;
-					alert("刪除成功");
-		 			window.location.reload();
-				}).catch(function (error) {
-				 	console.log(error);
-			  	});
+				axios.delete("/CathayBankDemo/delByCode/" + this.code)
+					.then(function (response) {
+						console.log("刪除成功");
+						that.delDialog = false;
+						alert("刪除成功");
+						window.location.reload();
+					}).catch(function (error) {
+						console.log(error);
+					});
 			}
-			
+
 		}
 	});
 </script>
 
 </html>
-
