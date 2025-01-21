@@ -27,10 +27,7 @@ class BitCoinServiceImplTest {
 	private BitCoinServiceImpl bitCoinService;
 	@Autowired
 	private BitcoinFeignClient client;
-	
-	/**
-	 * 新增多筆資料
-	 * */
+
 	@Test
 	public void testAddAllData() {
 		CurrentPriceResponse resource = client.getCurrentPrice();
@@ -67,9 +64,6 @@ class BitCoinServiceImplTest {
 		assertNotNull(coin);
 	}
 
-	/**
-	 * 預期: 有查詢到 USD 資料
-	 */
 	@Test
 	void testGetByCode() {
 		// 查詢
@@ -77,10 +71,10 @@ class BitCoinServiceImplTest {
 		System.out.println("coin:" + coin);
 		assertNotNull(coin);
 	}
-	
+
 	@Test
 	void testDelData() {
-
+		bitCoinService.delData("USD");
 	}
 
 	@Test
@@ -90,9 +84,6 @@ class BitCoinServiceImplTest {
 		bitCoinService.updData(request);
 	}
 
-	/**
-	 * 預期: 有查詢到幣別資料
-	 */
 	@Test
 	void testGetAll() {
 		List<BitcoinQueriedResponseData> coinList = bitCoinService.getAllCoinData();
