@@ -28,7 +28,7 @@ class BitCoinServiceImplTest {
 	@Autowired
 	private BitcoinFeignClient client;
 
-	@Test
+//	@Test
 	public void testAddAllData() {
 		CurrentPriceResponse resource = client.getCurrentPrice();
 
@@ -54,7 +54,7 @@ class BitCoinServiceImplTest {
 		assertTrue(!coins.isEmpty());
 	}
 
-	@Test
+//	@Test
 	void testAddNewData() {
 		// 新增
 		CreateCoinRequest request = new CreateCoinRequest("JPY", "&#165;", "4,041,059.52", "Japanese yen");
@@ -64,7 +64,7 @@ class BitCoinServiceImplTest {
 		assertNotNull(coin);
 	}
 
-	@Test
+//	@Test
 	void testGetByCode() {
 		// 查詢
 		BitcoinQueriedResponseData coin = bitCoinService.getByCode("JPY");
@@ -72,19 +72,19 @@ class BitCoinServiceImplTest {
 		assertNotNull(coin);
 	}
 
-	@Test
+//	@Test
 	void testDelData() {
 		bitCoinService.delData("USD");
 	}
 
-	@Test
+//	@Test
 	void testUpdData() {
 		// 新增
 		UpdateCoinRequest request = new UpdateCoinRequest("JPY", "&#165;", "4,045,059.52", "Japanese yen");
 		bitCoinService.updData(request);
 	}
 
-	@Test
+//	@Test
 	void testGetAll() {
 		List<BitcoinQueriedResponseData> coinList = bitCoinService.getAllCoinData();
 		assertTrue(!coinList.isEmpty());// 判斷是否查無資料

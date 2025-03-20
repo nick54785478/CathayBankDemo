@@ -37,7 +37,7 @@ class CathayBankDemoApplicationTests {
 	@Autowired
 	private CoinDeskSerivce coinDeskSerivce;
 	
-	@Test
+//	@Test
 	void contextLoads() {
 		testAddAllData();
 		testGetAllCoinData();

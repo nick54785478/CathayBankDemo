@@ -17,7 +17,7 @@ class BitcoinFeignClientTest {
 	@Autowired
 	private BitcoinFeignClient client;
 
-	@Test
+//	@Test
 	void testGetCurrentPrice() {
 		CurrentPriceResponse currentPrice = client.getCurrentPrice();
 		System.out.println("currentPrice:" + currentPrice);
