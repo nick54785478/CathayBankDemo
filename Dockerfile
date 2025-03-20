@@ -1,6 +1,5 @@
 FROM openjdk:8-jdk
 VOLUME /tmp
-#WORKDIR /app
 ARG JAR_FILE=/target/cathay-bank-demo-0.0.1-SNAPSHOT.jar
 ENV TZ Asia/Taipei
 COPY ${JAR_FILE} app.jar
