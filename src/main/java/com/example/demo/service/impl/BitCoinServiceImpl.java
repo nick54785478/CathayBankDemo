@@ -90,6 +90,7 @@ public class BitCoinServiceImpl implements BitCoinService {
 	@Override
 	public List<BitcoinQueriedResponseData> getAllCoinData() {
 		List<Bitcoin> coinList = bcRepository.findAll();
+		System.out.println(coinList);
 		return BaseDataTransformer.transformData(coinList, BitcoinQueriedResponseData.class);
 	}
 
