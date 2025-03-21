@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>國泰世華 JAVA Engineer 線上作業</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+        }
+        h3 {
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 3px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>國泰世華 JAVA Engineer 線上作業</h3>
+        <p><strong>作者:</strong> 張耿豪 Nick Zhang</p>
+
+        <div class="section">
+            <h4>架構</h4>
+            <p>MVC 架構</p>
+        </div>
+
+        <div class="section">
+            <h4>技術棧</h4>
+            <ul>
+                <li><strong>後端:</strong> Spring Boot、Spring Data JPA</li>
+                <li><strong>前端:</strong> 使用 CDN 掛載 Vue.js 搭配 Vuetify</li>
+                <li><strong>資料庫:</strong> H2</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h4>功能介紹</h4>
+            <ul>
+                <li>
+                    <strong>呼叫 Test 進行測試</strong>
+                    <ul>
+                        <li><code>BitcoinFeignClientTest</code>: 透過 Feign Client 取回 Bitcoin 資料</li>
+                        <li><code>BitCoinServiceImplTest</code>: 對 Service 進行測試 (依需求打開 <code>@Test</code> 註解)</li>
+                        <li><code>CathayBankDemoApplicationTests</code>: 透過 Feign Client 對後端進行集成測試 (需先啟動後端專案)</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>前端頁面 (供參)</strong>: Vue3 (可能有 Bug，後續若有時間再修改)
+                    <ul>
+                        <li><strong>新增</strong>: 點擊後顯示 Dialog，輸入並送出</li>
+                        <li><strong>呼叫 Coindesk API</strong>: 點擊後將資料渲染到頁面</li>
+                        <li><strong>依幣別查詢、修改、刪除</strong>:
+                            <ul>
+                                <li><strong>查詢</strong>: 根據 select 框中的 Code 選取資料並渲染</li>
+                                <li><strong>修改</strong>: 根據 select 框中的 Code 選取資料，彈出 Dialog 進行編輯後提交</li>
+                                <li><strong>刪除</strong>: 根據 select 框中的 Code 選取資料，顯示於 Dialog 中 (唯讀)，供使用者確認後刪除</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h4>使用流程</h4>
+            <ol>
+                <li>開啟專案後，進入 <a href="http://localhost:8080/CathayBankDemo/" target="_blank">http://localhost:8080/CathayBankDemo/</a></li>
+                <li>新增一筆 JPY 資料 (初始化時未插入 H2)</li>
+                <li>依上面功能進行操作</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>
