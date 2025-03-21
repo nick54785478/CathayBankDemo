@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk
+FROM openjdk:11-jdk-slim
 VOLUME /tmp
 ARG JAR_FILE=/target/cathay-bank-demo-0.0.1-SNAPSHOT.jar
 ENV TZ Asia/Taipei
