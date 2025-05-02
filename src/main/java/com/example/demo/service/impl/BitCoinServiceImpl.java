@@ -31,6 +31,11 @@ public class BitCoinServiceImpl implements BitCoinService {
 	@Autowired
 	BitCoinRepository bcRepository;
 
+	/**
+	 * 新增一筆比特幣幣別交易資料
+	 * 
+	 * @param requestData 比特幣交易幣別資料
+	 */
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = 36000, rollbackFor = Exception.class)
 	@Override
 	public void addNewData(CreateCoinRequest requestData) {
@@ -44,6 +49,11 @@ public class BitCoinServiceImpl implements BitCoinService {
 
 	}
 
+	/**
+	 * 新增多筆比特幣幣別交易資料
+	 * 
+	 * @param coinList 比特幣幣別交易資料
+	 */
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = 36000, rollbackFor = Exception.class)
 	@Override
 	public void addAllData(List<CreateCoinRequest> coinList) {
@@ -55,6 +65,11 @@ public class BitCoinServiceImpl implements BitCoinService {
 		bcRepository.saveAll(bitcoins);
 	}
 
+	/**
+	 * 刪除特定比特幣交易幣別資料
+	 * 
+	 * @param code
+	 */
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = 36000, rollbackFor = Exception.class)
 	@Override
 	public void delData(String code) {
@@ -66,18 +81,28 @@ public class BitCoinServiceImpl implements BitCoinService {
 		});
 	}
 
+	/**
+	 * 更新特定比特幣交易幣別資料
+	 * 
+	 * @param requestData
+	 */
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = 36000, rollbackFor = Exception.class)
 	@Override
-	public void updData(UpdateCoinRequest request) {
-		bcRepository.findById(request.getCode()).ifPresentOrElse(coin -> {
-			coin.update(request);
+	public void updData(UpdateCoinRequest requestData) {
+		bcRepository.findById(requestData.getCode()).ifPresentOrElse(coin -> {
+			coin.update(requestData);
 			bcRepository.save(coin);
 		}, () -> {
-			log.error("查無此資料, Code:{}", request.getCode());
-			throw new ValidationException("VALIDATE_FAILED", "查無此資料，Code:" + request.getCode());
+			log.error("查無此資料, Code:{}", requestData.getCode());
+			throw new ValidationException("VALIDATE_FAILED", "查無此資料，Code:" + requestData.getCode());
 		});
 	}
 
+	/**
+	 * 透過 Code 取得幣別資料
+	 * 
+	 * @param code
+	 */
 	@Override
 	public BitcoinQueriedResponseData getByCode(String code) {
 		Bitcoin coin = bcRepository.findByCode(code);
@@ -87,6 +112,9 @@ public class BitCoinServiceImpl implements BitCoinService {
 		return BaseDataTransformer.transformData(coin, BitcoinQueriedResponseData.class);
 	}
 
+	/**
+	 * 取得所有幣別資料
+	 */
 	@Override
 	public List<BitcoinQueriedResponseData> getAllCoinData() {
 		List<Bitcoin> coinList = bcRepository.findAll();

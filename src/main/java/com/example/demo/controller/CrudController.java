@@ -21,6 +21,7 @@ import com.example.demo.dto.response.BitcoinListQueriedResponse;
 import com.example.demo.dto.response.BitcoinQueriedResponse;
 import com.example.demo.service.impl.BitCoinServiceImpl;
 
+
 @RestController
 public class CrudController {
 
