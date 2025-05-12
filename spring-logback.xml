@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 日誌等級從低到高分為TRACE < DEBUG < INFO < WARN < ERROR < FATAL，如果設定為WARN，則低於WARN的資訊都不會輸出 -->
+<!-- scan:當此屬性設為true時，配置文件如果發生改變，將會被重新加載，預設值為true -->
+<!-- scanPeriod:設定監測配置文件是否有修改的時間間隔，如果沒有給出時間單位，預設單位是毫秒。當scan為true時，此屬性生效。預設的時間間隔為1分鐘。 -->
+<!-- debug:當此屬性設為true時，將列印出logback內部日誌訊息，即時查看logback運行狀態。預設值為false。 -->
+<configuration scan="true" scanPeriod="10 seconds">
+    <property name="log.path" value="./logs"/>
+    <springProperty scope="context" name="env" source="spring.profiles.active"/>
+    <springProperty scope="context" name="appName" source="spring.application.name"/>
+    <property name="console.log.pattern"
+              value="%red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger{36}%n) - %msg%n"/>
+    <property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"/>
+
+    <!-- 控制台输出 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${console.log.pattern}</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 控制台输出 -->
+    <appender name="file_console" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/sys-console.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 日誌文件名格式 -->
+            <fileNamePattern>${log.path}/sys-console.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 日誌最大 1天 -->
+            <maxHistory>1</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<!-- 過濾的等級 -->
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+	<!-- 系統日誌輸出 -->    
+	<appender name="file_info" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/sys-info.log</file>
+        <!-- 循環政策：基於時間建立日誌檔案 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 日誌文件名格式 -->
+            <fileNamePattern>${log.path}/sys-info.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!-- 日誌最大的歷史 60天 -->            
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<!-- 過濾的等級 -->
+            <level>INFO</level>
+			<!-- 符合時的操作：接收（記錄） -->
+            <onMatch>ACCEPT</onMatch>
+			<!-- 不符合時的操作：拒絕（不記錄） -->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="file_error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/sys-error.log</file>
+        <!-- 循環政策：基於時間建立日誌檔案 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 日誌文件名格式 -->
+            <fileNamePattern>${log.path}/sys-error.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!-- 日誌最大的歷史 60天 -->            
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<!-- 過濾的等級 -->
+            <level>ERROR</level>
+			<!-- 符合時的操作：接收（記錄） -->
+            <onMatch>ACCEPT</onMatch>
+			<!-- 不符合時的操作：拒絕（不記錄） -->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+	<!-- info非同步輸出 -->
+    <appender name="async_info" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 不遺失日誌.預設的,如果佇列的80%已滿,則會丟棄TRACT、DEBUG、INFO等級的日誌 -->
+        <discardingThreshold>0</discardingThreshold>
+		<!-- 更改預設的佇列的深度,該值會影響效能.預設值為256 -->
+        <queueSize>512</queueSize>
+        <!-- 添加附加的appender,最多只能添加一个 -->
+        <appender-ref ref="file_info"/>
+    </appender>
+
+    <!-- error非同步輸出 -->
+    <appender name="async_error" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 不遺失日誌.預設的,如果佇列的80%已滿,則會丟棄TRACT、DEBUG、INFO等級的日誌 -->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- 更改預設的佇列的深度,該值會影響效能.預設值為256 -->
+        <queueSize>512</queueSize>
+        <!-- 添加附加的appender,最多只能添加一个 -->
+        <appender-ref ref="file_error"/>
+    </appender>
+
+    <!--LOGSTASH config -->
+    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>192.168.68.54:5044</destination>
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">
+			<!--自訂時間戳格式， 預設是yyyy-MM-dd'T'HH:mm:ss.SSS<-->
+            <timestampPattern>yyyy-MM-dd HH:mm:ss</timestampPattern>
+            <customFields>{"appname":"${appName}${env}"}</customFields>
+        </encoder>
+    </appender>
+
+	<!--系統操作日誌-->
+    <root level="info">
+        <appender-ref ref="console" />
+        <appender-ref ref="async_info" />
+        <appender-ref ref="async_error" />
+        <appender-ref ref="file_console" />
+        <appender-ref ref="LOGSTASH"/>
+    </root>
+
+</configuration>
