@@ -21,7 +21,9 @@ import com.example.demo.dto.response.BitcoinListQueriedResponse;
 import com.example.demo.dto.response.BitcoinQueriedResponse;
 import com.example.demo.service.impl.BitCoinServiceImpl;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 public class CrudController {
 
@@ -70,7 +72,7 @@ public class CrudController {
 	 * 透過幣別查詢該筆幣別資料
 	 */
 	@GetMapping("getByCode/{code}")
-	public ResponseEntity<BitcoinQueriedResponse> getByCode(@PathVariable("code") String code) {
+	public ResponseEntity<BitcoinQueriedResponse> getByCode(@PathVariable String code) {
 		BitcoinQueriedResponseData responseData = bcService.getByCode(code);
 		BitcoinQueriedResponse response = new BitcoinQueriedResponse();
 		response.setCode("200");
@@ -87,16 +89,16 @@ public class CrudController {
 	public ResponseEntity<BaseResponse> updByCode(@PathVariable String code, @RequestBody UpdateCoinRequest request) {
 		request.setCode(code);
 		bcService.updData(request);
-		return new ResponseEntity<BaseResponse>(new BaseResponse("200", "修改成功"), HttpStatus.OK);
+		return new ResponseEntity<>(new BaseResponse("200", "修改成功"), HttpStatus.OK);
 	}
 
 	/**
 	 * 刪除該筆幣別資料
 	 */
 	@DeleteMapping("delByCode/{code}")
-	public ResponseEntity<BaseResponse> delByCode(@PathVariable("code") String code) {
+	public ResponseEntity<BaseResponse> delByCode(@PathVariable String code) {
 		bcService.delData(code);
-		return new ResponseEntity<BaseResponse>(new BaseResponse("200", "刪除成功"), HttpStatus.OK);
+		return new ResponseEntity<>(new BaseResponse("200", "刪除成功"), HttpStatus.OK);
 
 	}
 
