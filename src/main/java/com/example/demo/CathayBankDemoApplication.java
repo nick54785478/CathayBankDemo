@@ -11,9 +11,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import com.example.demo.dto.request.CreateCoinRequest;
 import com.example.demo.service.impl.BitCoinServiceImpl;
 
-@SpringBootApplication
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @EnableJpaAuditing
 @EnableFeignClients
+@SpringBootApplication
 public class CathayBankDemoApplication {
 
 	@Autowired
@@ -33,6 +36,11 @@ public class CathayBankDemoApplication {
 		bitCoinService.addNewData(eur);
 		bitCoinService.addNewData(usd);
 		bitCoinService.addNewData(gbp);
+		
+		log.info("進行資料初始化，插入比特幣資料進資料庫。");
+		log.info("歐元價格: {}", eur);
+		log.info("美元價格: {}", usd);
+		log.info("英鎊價格: {}", gbp);
 		
 		System.out.println("init: 新增比特幣資料.....");
 

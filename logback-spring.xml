@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+    <!--應用名稱-->
+    <property name="APP_NAME" value="springboot-logback-cathay-bank-demo"/>
+    <contextName>${APP_NAME}</contextName>
+    <!--輸出到 logstash 的 appender-->
+    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>logstash:5000</destination>
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder"/>
+    </appender>
+
+
+    <root level="info">
+        <appender-ref ref="LOGSTASH"/>
+    </root>
+
+</configuration>

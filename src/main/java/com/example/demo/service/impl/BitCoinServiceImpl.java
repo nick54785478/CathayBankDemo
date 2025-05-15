@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BitCoinServiceImpl implements BitCoinService {
 
 	@Autowired
-	BitCoinRepository bcRepository;
+	private BitCoinRepository bcRepository;
 
 	/**
 	 * 新增一筆比特幣幣別交易資料
